@@ -1,0 +1,48 @@
+services:
+  # mongodb:
+  #   image: mongo:latest
+  #   container_name: mongodb
+  #   command: mongod --bind_ip_all
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb_data:/data/db
+
+  auth:
+    env_file:
+      - .env  
+    image: auth
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+    ports:
+      - "${AUTH_PORT}:${AUTH_PORT}"
+    environment:
+      - MONGO_DB=${MONGO_DB}
+      - AUTH_PORT=${AUTH_PORT}
+      - PORT=${AUTH_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    # depends_on:
+    #   - mongodb
+
+  client:
+    env_file:
+      - .env  
+    image: client
+    build:
+      context: .
+      dockerfile: ./apps/client/Dockerfile
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    environment:
+      - MONGO_DB=${MONGO_DB}
+      - CLIENT_PORT=${CLIENT_PORT}
+      - PORT=${CLIENT_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    # depends_on:
+    #   - mongodb
+
+volumes:
+  mongodb_data:

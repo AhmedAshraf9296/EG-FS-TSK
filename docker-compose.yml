@@ -1,0 +1,18 @@
+services:
+  auth:
+    extends:
+      file: ./backend/docker-compose.yml
+      service: auth
+
+  client:
+    extends:
+      file: ./backend/docker-compose.yml
+      service: client
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    restart: unless-stopped
