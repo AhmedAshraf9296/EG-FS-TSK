@@ -37,7 +37,7 @@ export class SignupController {
         value: {
           name: 'Ahmed Ashraf',
           phone: '+201288768405',
-          password: '123456',
+          password: '0116496981Aa!!',
           email:"ahmed.ashraf@gmail.com"
         },
       },
@@ -45,7 +45,7 @@ export class SignupController {
         value: {
           name: 'ahmed msh verified',
           phone: '+201538368405',
-          password: '123456',
+          password: '0116496981Aa!!',
           email:"ahmed.ashraf@gmail.com"
         },
       },
@@ -53,14 +53,14 @@ export class SignupController {
         value: {
           name: 'ay haga',
           phone: '38368405',
-          password: '123456',
+          password: '0116496981Aa!!',
         },
       },
       'Wrong ZipCode length': {
         value: {
           name: 'ay haga',
           phone: '+201538368405',
-          password: '123456',
+          password: '0116496981Aa!!',
         },
       },
     },

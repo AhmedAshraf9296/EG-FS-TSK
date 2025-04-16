@@ -8,6 +8,7 @@ import {
 import { MongoServerError } from 'mongodb'
 import { Error as MongooseError } from 'mongoose'
 import type { ServerRequest, ServerResponse } from '../types'
+import { winstonLogger } from '../utils/winston-logger'
 
 const messagesLookupTable = {
   [MongooseError.ValidationError.name]: HttpStatus.BAD_REQUEST,
@@ -41,11 +42,16 @@ export class MongooseErrorFilter implements ExceptionFilter {
     const status =
       messagesLookupTable[exception.name] || messagesLookupTable.default
 
-    this.logger.error(
-      `Error on ${request.method} ${request.url} ${exception.name} from ${request.headers['user-agent']}\n${exception.message} `,
-      exception.stack,
+
+      this.logger.error(
+        `Error on ${request.method} ${request.url} ${exception.name} from ${request.headers['user-agent']}\n${exception.message} `,
+        exception.stack,
+      )
+      winstonLogger.error(
+      `MongooseError | ${request.method} ${request.url} | ${request.headers['user-agent']} | ${exception.name} | ${exception.message}`,
+      { stack: exception.stack },
     )
-   
+
     return response.status(status).send({
       statusCode: status,
       message: exception.message,

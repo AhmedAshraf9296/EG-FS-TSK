@@ -9,7 +9,7 @@ import { UsersModule } from '@lib/common/users/users.module'
 @Module({
   imports: [
     SharedModule,
-    UsersModule.forRoot(),
+    UsersModule.forRoot({controller:false}),
     AppServicesModule.forRoot(),
     ConfigModule,
   

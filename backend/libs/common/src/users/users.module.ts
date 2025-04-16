@@ -1,43 +1,50 @@
-import { DynamicModule, Module } from '@nestjs/common'
+
+import { DynamicModule, Module, forwardRef } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { UserFeature } from './entities/user.entity';
-import { UsersController } from './users.controller';
-import { UsersRepository } from './users.repository';
-import { UsersService } from './users.service';
-import { HashService } from '../services/hashing.service';
+import { UsersController } from './users.controller'
+import { UsersService } from './users.service'
+import { UserFeature } from './entities/user.entity'
+import { UsersRepository } from './users.repository'
+import { HashService } from '../services/hashing.service'
+
+const imports = [
+  MongooseModule.forFeature([
+    UserFeature,
+  ]),
+]
+const providers = [
+  UsersService,
+  UsersRepository,
+  HashService
+]
+const moduleExports = providers
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      UserFeature
-    ]),
-  ],
-  controllers:[UsersController],
-  providers: [UsersService, UsersRepository,HashService ],
+  imports,
+  providers,
+  exports: moduleExports,
 })
 export class UsersModule {
-  static forRoot(options?: { controller?: boolean, repoOnly?: boolean }): DynamicModule {
-    if (options?.controller) {
-      return {
-        module: UsersModule,
-        controllers: [UsersController],
-        providers: [UsersService, UsersRepository],
-        exports: [UsersService, UsersRepository],
-      }
-    }
-    if (options?.repoOnly) {
+  static forRoot({
+    controller = false,
+    repoOnly = false,
+  }: {
+    controller?: boolean
+    repoOnly?: boolean
+  }): DynamicModule {
+    if (repoOnly) {
       return {
         module: UsersModule,
         providers: [UsersRepository],
         exports: [UsersRepository],
       }
     }
+
     return {
       module: UsersModule,
-      providers: [UsersService, UsersRepository],
-      exports: [UsersService, UsersRepository],
+      ...(controller && { controllers: [UsersController] }),
+      providers,
+      exports: moduleExports,
     }
   }
 }
-
-

@@ -65,8 +65,8 @@ error: 'missing_user_password' => User Doesn't Have Password, return to admin
     examples: {
       'user with valid email': {
         value: {
-          email: 'admin@mail.com',
-          password: '123456',
+          email: 'ahmed.ashraf@gmail.com',
+          password: '0116496981Aa!!',
         },
       },
       'user with invalid email': {

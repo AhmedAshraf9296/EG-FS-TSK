@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common'
 import type { Socket } from 'socket.io'
 import { CustomConfigService } from '../config'
+import { winstonLogger } from '../utils/winston-logger'
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -44,16 +45,25 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const data = ctx.getData()
 
     // only log 500 errors (Internal Server Error) stacks to avoid cluttering the log.
-    if (exception instanceof InternalServerErrorException)
+    if (exception instanceof InternalServerErrorException){
       this.logger.error(
         `Error on ${data.event} from ${client.handshake.headers['user-agent']}\n${exception.message} `,
         exception.stack,
       )
+      winstonLogger.error(
+        `WS | ${data.event} | ${client.handshake.headers['user-agent']} | ${exception.message}`,
+        { stack: exception.stack }
+      )
+    }
     // only warn 400 and above errors.
-    else if (exception.getStatus() >= 400)
+    else if (exception.getStatus() >= 400){
       this.logger.warn(
         `Finished ${data.event} from ${client.handshake.headers['user-agent']}\n${exception.message} `,
       )
+      winstonLogger.warn(
+        `WS | ${data.event} | ${client.handshake.headers['user-agent']} | ${exception.message}`
+      )
+    }
 
     const res = exception.getResponse()
 
@@ -109,16 +119,25 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const res = exception.getResponse()
 
     // only log 500 errors (Internal Server Error) stacks to avoid cluttering the log
-    if (exception instanceof InternalServerErrorException || status >= 500)
+    if (exception instanceof InternalServerErrorException || status >= 500){
       this.logger.error(
         `Error on ${request.method} ${request.url} ${exception.name} from ${request.headers['user-agent']}\n${exception.message} `,
         exception.stack,
       )
+      winstonLogger.error(
+        `HTTP | ${request.method} ${request.url} | ${request.headers['user-agent']} | ${exception.message}`,
+        { stack: exception.stack }
+      )
+    }
     // only warn 400 and above errors.
-    else if (status >= 400)
+    else if (status >= 400){
       this.logger.warn(
         `Finished ${request.method} ${request.url} ${exception.name} from ${request.headers['user-agent']}\n${exception.message} `,
       )
+      winstonLogger.warn(
+        `HTTP | ${request.method} ${request.url} | ${request.headers['user-agent']} | ${exception.message}`
+      )
+    }
     // techincally this should never happen
     else
       this.logger.log(
