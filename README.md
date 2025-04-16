@@ -9,6 +9,21 @@ The application is deployed and accessible at:
 
 The demo is hosted on AWS EC2 instance and includes both the frontend and backend services, demonstrating all the required functionality.
 
+## API Documentation
+
+- **Client Service API**: [Swagger Documentation](http://ec2-51-21-248-37.eu-north-1.compute.amazonaws.com:3005/docs)
+- **Auth Service API**: [Swagger Documentation](http://ec2-51-21-248-37.eu-north-1.compute.amazonaws.com:3006/docs)
+
+## Technologies Used
+
+### Backend
+- NestJS Monorepo Architecture
+- Argon2 for secure password hashing
+- Winston for comprehensive logging
+- Swagger for API documentation
+- MongoDB for database
+- JWT for authentication
+
 ## Project Structure
 
 - `backend/` - NestJS monorepo containing:
