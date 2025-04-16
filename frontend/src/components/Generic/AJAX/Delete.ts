@@ -11,14 +11,16 @@ const handleDelete=(ID:number|string,name:string|null,endpoint:string,cb:()=>voi
     }).then(async isConfirm=>{
         if(isConfirm.isConfirmed){
             const cookie = document.cookie;
-            const authToken = cookie.split('; ').find(row => row.startsWith('authToken='));
-            const token = authToken ? authToken.split('=')[1] : null;
+            // const authToken = cookie.split('; ').find(row => row.startsWith('authToken='));
+            const authToken = sessionStorage.getItem('authToken');
+    
+            // const token = authToken ? authToken.split('=')[1] : null;
     
             const headers = new Headers();
             headers.append("Content-Type", "application/json");
             
-            if (token) {
-                headers.append("Authorization", `Bearer ${token}`);
+            if (authToken) {
+                headers.append("Authorization", `Bearer ${authToken}`);
             }
             const client = import.meta.env.VITE_API_URL_CLIENT   
                 const req = await fetch(`${client}/v1/${endpoint}/${ID}`, {

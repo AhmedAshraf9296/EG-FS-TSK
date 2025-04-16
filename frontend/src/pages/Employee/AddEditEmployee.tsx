@@ -40,7 +40,7 @@ const AddEditEmployees = () => {
     });
 
     const validatePassword = (password: string) => {
-        const length = password.length >= 8;
+        const length = password?.length >= 8;
         const letter = /[a-zA-Z]/.test(password);
         const number = /[0-9]/.test(password);
         const specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
@@ -90,12 +90,12 @@ const AddEditEmployees = () => {
         const { password } = employeesData;
     
         const errors = [];
-        if (password.length < 8) errors.push("At least 8 characters");
+        if (password?.length < 8) errors.push("At least 8 characters");
         if (!/[a-zA-Z]/.test(password)) errors.push("Includes at least one letter");
         if (!/[0-9]/.test(password)) errors.push("Includes at least one number");
         if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) errors.push("Includes at least one special character");
     
-        if (errors.length > 0) {
+        if (errors?.length > 0) {
             Swal.fire({
                 title: "Password Requirements",
                 html: `<ul style="text-align: left; font-size: 14px;">
