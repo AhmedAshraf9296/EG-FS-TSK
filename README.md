@@ -103,7 +103,3 @@ docker-compose up -d
 - Environment variables are required for proper functioning and will be shared privately
 - MongoDB connection should be configured through environment variables
 - All services are configured to restart automatically unless stopped manually
-
-## License
-
-[Add your license information here]
