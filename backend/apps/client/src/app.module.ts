@@ -8,7 +8,7 @@ import { RequireUserGuard } from '@lib/common/guards/user/user.guard';
 @Module({
   imports: [
     SharedModule,
-    UsersModule.forRoot(),
+    UsersModule.forRoot({controller:true}),
     AppServicesModule.forRoot(),
   ],
   controllers: [],
