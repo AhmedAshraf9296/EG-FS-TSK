@@ -12,8 +12,10 @@ const mutateData = async function (data: any, endpoint: string, method: string,m
         if (token) {
             headers.append("Authorization", `Bearer ${token}`);
         }
-        const module = moduleType === 'auth' ? '3006' : '3005';
-        return await fetch(`http://localhost:${module}/v1/${endpoint}`, {
+        const auth = import.meta.env.VITE_API_URL_AUTH;
+        const client = import.meta.env.VITE_API_URL_CLIENT        
+        const server = moduleType === 'auth' ? auth : client;
+        return await fetch(`${server}/v1/${endpoint}`, {
             method: method,
             headers: headers,
             body: data,

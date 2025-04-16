@@ -1,8 +1,8 @@
 const fetchData = async (path: string, id?: number) => {
     //For Production Use
     // const urlPath = id ? `/api/${path}/${id}` : `/api/${path}`;
-
-    const urlPath = id ? `http://localhost:3005/v1/${path}/${id}` : `http://localhost:3005/v1/${path}`;
+    const client = import.meta.env.VITE_API_URL_CLIENT   
+    const urlPath = id ? `${client}/v1/${path}/${id}` : `${client}/v1/${path}`;
     const cookie = document.cookie;
     const authToken = cookie.split('; ').find(row => row.startsWith('authToken='));
     const token = authToken ? authToken.split('=')[1] : null;

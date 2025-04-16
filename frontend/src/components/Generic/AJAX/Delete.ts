@@ -20,7 +20,8 @@ const handleDelete=(ID:number|string,name:string|null,endpoint:string,cb:()=>voi
             if (token) {
                 headers.append("Authorization", `Bearer ${token}`);
             }
-                const req = await fetch(`http://localhost:3005/v1/${endpoint}/${ID}`, {
+            const client = import.meta.env.VITE_API_URL_CLIENT   
+                const req = await fetch(`${client}/v1/${endpoint}/${ID}`, {
                     method: "DELETE",
                     headers: headers,
                 });
