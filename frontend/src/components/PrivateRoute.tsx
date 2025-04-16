@@ -5,7 +5,7 @@ const isAuthenticated = () => {
     // const authToken = cookie.split('; ').find(row => row.startsWith('authToken='));
     // handle it to work with AWS
     const authToken = sessionStorage.getItem('authToken');
-    return authToken !== undefined; // Check if the authToken is present
+    return authToken !== null; // Check if the authToken is present
   };
 const PrivateRoute = () => {
     if (isAuthenticated()) {
