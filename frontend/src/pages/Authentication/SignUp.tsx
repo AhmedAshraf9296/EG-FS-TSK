@@ -54,7 +54,7 @@ const SignUp: React.FC = () => {
             // Send the user data to the server (e.g., using fetch or axios)
             // Handle the response as needed
             userData.phone = '+2' + userData.phone;
-            const response = await mutateData(JSON.stringify(userData),'signup','POST');
+            const response = await mutateData(JSON.stringify(userData),'signup','POST','auth');
             if (response.user._id.length) {
                 navigate('/auth/signin');
             } else {

@@ -7,9 +7,6 @@ import GenericInput from "./Input";
 import Spinner from "./Spinner";
 import mutateData from "./AJAX/MutateData";
 import fetchData from "./AJAX/FetchData";
-import { JobsDTO } from "../../DTO/jobsDto";
-import { GroupsDTO } from "../../DTO/GroupsDto";
-import { TeacherDTO } from "../../DTO/TeachertDto";
 import GenericDropdown from "./Dropdown";
 
 interface TotalsData {

@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
 
     if (valid) {
       const userReq = { email, password };
-      const user = await mutateData(JSON.stringify(userReq), 'login/email', 'POST')
+      const user = await mutateData(JSON.stringify(userReq), 'login/email', 'POST','auth')
       if (user?.token) {
         const token = user.token;
         const expiresOn = new Date(user.expiresOn).toUTCString();

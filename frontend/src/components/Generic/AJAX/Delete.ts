@@ -10,7 +10,7 @@ const handleDelete=(ID:number|string,name:string|null,endpoint:string,cb:()=>voi
         showCancelButton:true,
     }).then(async isConfirm=>{
         if(isConfirm.isConfirmed){
-            const cookie = document.cookie;
+            // const cookie = document.cookie;
             // const authToken = cookie.split('; ').find(row => row.startsWith('authToken='));
             const authToken = sessionStorage.getItem('authToken');
     
@@ -22,7 +22,7 @@ const handleDelete=(ID:number|string,name:string|null,endpoint:string,cb:()=>voi
             if (authToken) {
                 headers.append("Authorization", `Bearer ${authToken}`);
             }
-            const client = import.meta.env.VITE_API_URL_CLIENT   
+            const client = import.meta.env.VITE_API_URL_CLIENT ?? 'http://localhost:3005';   
                 const req = await fetch(`${client}/v1/${endpoint}/${ID}`, {
                     method: "DELETE",
                     headers: headers,

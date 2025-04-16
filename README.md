@@ -110,7 +110,8 @@ npm start
 The application is containerized and can be deployed using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose --env-file ./backend/.env up -d
+
 ```
 
 ## Notes
